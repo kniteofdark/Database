@@ -1,0 +1,53 @@
+mysql <<EOFMYSQL
+use dpvaughn;
+show tables;
+
+DROP TABLE APPLICATIONS;
+DROP TABLE JOBS;
+DROP TABLE STUDENTS;
+
+CREATE TABLE STUDENTS (
+    StudentID int NOT NULL,
+    StudentName char(50) NOT NULL,
+    Major char(4) NOT NULL,
+    PRIMARY KEY(StudentID)
+);
+
+CREATE TABLE JOBS (
+    JobID int NOT NULL,
+    CompanyName varchar(50),
+    JobTitle varchar(50),
+    Salary int NOT NULL,
+    DesiredMajor char(4) NOT NULL,
+    PRIMARY KEY(JobID)
+);
+
+CREATE TABLE APPLICATIONS (
+    StudentID int NOT NULL,
+    JobID int NOT NULL,
+    FOREIGN KEY(StudentID) REFERENCES STUDENTS(StudentID),
+    FOREIGN KEY(JobID) REFERENCES JOBS(JobID)
+);
+
+INSERT INTO STUDENTS (StudentID, StudentName, Major) VALUES (1, 'Jim', 'CSCE');
+INSERT INTO STUDENTS (StudentID, StudentName, Major) VALUES (2, 'Bob', 'CSCE');
+INSERT INTO STUDENTS (StudentID, StudentName, Major) VALUES (3, 'Ben', 'ELEG');
+INSERT INTO STUDENTS (StudentID, StudentName, Major) VALUES (4, 'Jan', 'ELEG');
+INSERT INTO STUDENTS (StudentID, StudentName, Major) VALUES (5, 'Pat', 'MEEG');
+INSERT INTO STUDENTS (StudentID, StudentName, Major) VALUES (6, 'Mat', 'MEEG');
+
+INSERT INTO JOBS (JobID, CompanyName, JobTitle, Salary, DesiredMajor) VALUES (1, 'JB Hunt', 'Software Engineer', 45000, 'CSCE');
+INSERT INTO JOBS (JobID, CompanyName, JobTitle, Salary, DesiredMajor) VALUES (2, 'U.S. Census Bureau', 'Software Engineer', 38000, 'CSCE');
+INSERT INTO JOBS (JobID, CompanyName, JobTitle, Salary, DesiredMajor) VALUES (3, 'RadioShack', 'Clerk', 45000, 'ELEG');
+INSERT INTO JOBS (JobID, CompanyName, JobTitle, Salary, DesiredMajor) VALUES (4, 'Supply Pike', 'Software Engineer', 45000, 'MEEG');
+INSERT INTO JOBS (JobID, CompanyName, JobTitle, Salary, DesiredMajor) VALUES (5, 'NASA', 'Software Engineer', 50000, 'CSCE');
+INSERT INTO JOBS (JobID, CompanyName, JobTitle, Salary, DesiredMajor) VALUES (6, 'Tyson', 'Software Engineer', 100000, 'CSCE');
+
+INSERT INTO APPLICATIONS (StudentID, JobID) VALUES (1, 1);
+INSERT INTO APPLICATIONS (StudentID, JobID) VALUES (2, 2);
+INSERT INTO APPLICATIONS (StudentID, JobID) VALUES (3, 3);
+INSERT INTO APPLICATIONS (StudentID, JobID) VALUES (4, 5);
+INSERT INTO APPLICATIONS (StudentID, JobID) VALUES (5, 4);
+INSERT INTO APPLICATIONS (StudentID, JobID) VALUES (6, 6);
+
+EOFMYSQL
